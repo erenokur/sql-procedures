@@ -15,4 +15,11 @@ CREATE TABLE Employee (
 );
 GO
 
+-- Create a new table named "Department"
+CREATE TABLE Department (
+    DepartmentID INT PRIMARY KEY,
+    DepartmentName NVARCHAR(50)
+);
+GO
+
 
