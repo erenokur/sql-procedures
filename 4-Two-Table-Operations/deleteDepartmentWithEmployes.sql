@@ -6,6 +6,8 @@ CREATE PROCEDURE DeleteDepartmentAndEmployees
     @DepartmentID INT
 AS
 BEGIN
+    -- Suppress the "xx rows affected" message that SQL Server returns
+    SET NOCOUNT ON
     BEGIN TRAN;
 
     -- Delete all employees in the specified department

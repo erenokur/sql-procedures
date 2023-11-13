@@ -7,16 +7,24 @@ CREATE PROCEDURE DeleteEmployeeAndDepartment
     @DepartmentID INT
 AS
 BEGIN
-    BEGIN TRAN;
+    -- Suppress the "xx rows affected" message that SQL Server returns
+    SET NOCOUNT ON
+    BEGIN TRY
+        BEGIN TRAN;
 
-    -- Delete data from the Employee table
-    DELETE FROM Employee
-    WHERE EmployeeID = @EmployeeID;
+        -- Delete data from the Employee table
+        DELETE FROM Employee
+        WHERE EmployeeID = @EmployeeID;
 
-    -- Delete data from the Department table
-    DELETE FROM Department
-    WHERE DepartmentID = @DepartmentID;
+        -- Delete data from the Department table
+        DELETE FROM Department
+        WHERE DepartmentID = @DepartmentID;
 
-    COMMIT;
+        COMMIT;
+    END TRY
+    BEGIN CATCH
+	    ROLLBACK;
+	    PRINT 'An error occurred while deleting data from data tables Employee and Departments. Message:' + ERROR_MESSAGE();
+    END CATCH;
 END;
 GO
